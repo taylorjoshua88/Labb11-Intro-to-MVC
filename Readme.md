@@ -18,7 +18,7 @@ Create a web app that will allow a user to put in a span of 2 different years, a
 
 An example of the **functionality** of your site can be found [here](https://lab11.azurewebsites.net/).
 
-## Website Components
+## Website Requirements
 Your MVC Web Application should contain the following:
 
 1. Add the MVC Middleware and include template routing (the route must be explicitly defined)
