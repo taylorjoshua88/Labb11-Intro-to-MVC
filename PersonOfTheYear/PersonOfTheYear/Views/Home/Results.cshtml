@@ -1,0 +1,35 @@
+﻿@model List<PersonOfTheYear.Models.Person>
+
+<head>
+    <link rel="stylesheet" href="~/style.css" />
+</head>
+
+<body>
+    <div><h1>Time's Persons of the Year Results</h1></div>
+    <table>
+        <thead>
+            <tr>
+                <th>Year</th>
+                <th>Honor</th>
+                <th>Name</th>
+                <th>Country</th>
+                <th>Birth Year</th>
+                <th>Death Year</th>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Context</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var person in Model)
+            {
+                <tr>
+                    @foreach (var property in person)
+                    {
+                        <td>@property</td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>

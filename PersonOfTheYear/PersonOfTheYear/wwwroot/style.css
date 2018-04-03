@@ -1,5 +1,6 @@
 ﻿body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
     text-align: center;
     vertical-align: middle;
     background-image: url(background.jpg);
@@ -7,7 +8,7 @@
     background-repeat: no-repeat;
 }
 
-div {
+div, table {
     display: inline-block;
     margin: 1em;
     outline: solid;
@@ -61,4 +62,22 @@ h1 {
 
 h2 {
     color: #6BBAA7;
+}
+
+table {
+    column-width: 50em;
+}
+
+thead {
+    color: #6BBAA7;
+    background-color: rgba(182, 161, 158, 0.165);
+}
+
+td {
+    padding-right: 0.65em;
+    padding-left: 0.65em;
+}
+
+tr:nth-child(even) {
+    background-color: rgba(108, 100, 139, 0.35);
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using PersonOfTheYear.Models;
 
 namespace PersonOfTheYear.Controllers
 {
@@ -17,12 +18,14 @@ namespace PersonOfTheYear.Controllers
         [HttpPost]
         public IActionResult Index(int startYear, int endYear)
         {
-
-            // TODO: Change to redirect to Results action
-            return View();
+            return RedirectToAction("Results", new { startYear, endYear });
         }
 
-        //[HttpGet]
-        //public IActionResult Results
+        [HttpGet]
+        public IActionResult Results(int startYear, int endYear)
+        {
+            List<Person> people = Person.GetPeopleFromCSV(startYear, endYear);
+            return View(people);
+        }
     }
 }

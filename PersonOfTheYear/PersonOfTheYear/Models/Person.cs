@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace PersonOfTheYear.Models
     /// <summary>
     /// Represents a single Time Person of the Year record
     /// </summary>
-    public class Person : IEquatable<Person>
+    public class Person : IEquatable<Person>, IEnumerable<string>
     {
         public int Year { get; set; }
         public string Honor { get; set; }
@@ -95,6 +96,27 @@ namespace PersonOfTheYear.Models
                 Title == other.Title &&
                 Category == other.Category &&
                 Context == other.Context;
+        }
+        #endregion
+
+        #region IEnumerable<string> Implementation for Easier Razor View Display
+        public IEnumerator<string> GetEnumerator()
+        {
+            // Display either a string representation for each column or N/A if empty
+            yield return Year == 0 ? "N/A" : Year.ToString();
+            yield return Honor.Length < 1 ? "N/A" : Honor;
+            yield return Name.Length < 1 ? "N/A" : Name;
+            yield return Country.Length < 1 ? "N/A" : Country;
+            yield return Birth_Year == 0 ? "N/A" : Birth_Year.ToString();
+            yield return DeathYear == 0 ? "N/A" : DeathYear.ToString();
+            yield return Title.Length < 1 ? "N/A" : Title;
+            yield return Category.Length < 1 ? "N/A" : Category;
+            yield return Context.Length < 1 ? "N/A" : Context;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
         #endregion
     }
