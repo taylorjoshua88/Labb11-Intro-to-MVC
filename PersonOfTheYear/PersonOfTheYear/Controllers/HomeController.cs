@@ -15,7 +15,7 @@ namespace PersonOfTheYear.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index(DateTime startDateTime, DateTime endDateTime)
+        public IActionResult Index(int startYear, int endYear)
         {
 
             // TODO: Change to redirect to Results action

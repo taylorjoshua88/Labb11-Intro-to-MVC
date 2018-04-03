@@ -43,7 +43,7 @@ namespace PersonOfTheYear.Models
             // or if there is an I/O error!!!
             string[] csvLines = File.ReadAllLines(csvPath);
 
-            // Create a list for all people in the CSV file with an initial length taken from the
+            // Create a list for all people in the CSV file with an initial capacity taken from the
             // number of lines in the CSV file to avoid internal array resizing inefficiencies
             // in List<Person> as people are added. Subtract one to account for the header row.
             List<Person> people = new List<Person>(csvLines.Length - 1);
@@ -55,7 +55,7 @@ namespace PersonOfTheYear.Models
                 string[] columns = csvLines[lineIdx].Split(',');
                 
                 // Make sure there are enough columns to avoid index exceptions and provide
-                // a more helpful exception to fix the source CSV file
+                // a more helpful exception to fix the source CSV file in case of missing data
                 if (columns.Length < 9)
                 {
                     throw new FormatException($"{csvPath} has too few columns on row {lineIdx + 1}");
