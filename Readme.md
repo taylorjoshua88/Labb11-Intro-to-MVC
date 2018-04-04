@@ -38,7 +38,9 @@ the xUnit testing framework (included via a NuGet dependency).
 #### Index View for the Home Controller ####
 ![Index View Screenshot](/assets/indexView.JPG)
 #### Results View Using Input From the Index View ####
-![Non-Empty Query Screenshot](/assets/resultsView.JPG)
+![Results View Screenshot](/assets/resultsView.JPG)
+#### Results View With No Results ####
+![No Results View Screenshot](/assets/noresults.JPG)
 
 ## Architecture
 
