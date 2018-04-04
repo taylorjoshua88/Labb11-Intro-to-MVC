@@ -1,123 +1,79 @@
-![cf](http://i.imgur.com/7v5ASc8.png) Lab 11: My First MVC App
-=====================================
+# PersonOfTheYear
 
-## To Submit this Assignment
-- fork this repository
-- write all of your code in a directory named `lab-#`; + `<your name>` **e.g.** `lab08-amanda`
-- push to your repository
-- submit a pull request to this repository
-- submit a link to your PR in canvas
+**Author**: Joshua Taylor
+**Version**: 1.0.0
 
+## Overview
 
-## Directions
+PersonOfTheYear is a demonstration of the MVC architecture in ASP.NET Core. It
+provides a simple form using a Razor View asking for a minimum year and a
+maximum year. Submitting this form results in a HTTP POST which redirects the
+user to a results page containing all of the person of the year entries within
+the specified years (inclusive) taken from a CSV source.
 
-**Read the instructions and website components, in it's entirety, before beginning** <br />
+## Getting Started
 
-Today you will be creating your first ASP.NET Core MVC web application. Provided is a csv file of all the "Time" Persons of the year from 1927 - present. 
-Create a web app that will allow a user to put in a span of 2 different years, and a list of all the winners will be returned. 
+PersonOfTheYear targets the .NET Core 2.0 platform. The .NET Core 2.0 SDK can
+be downloaded from the following URL for Windows, Linux, and macOS:
 
-An example of the **functionality** of your site can be found [here](https://lab11.azurewebsites.net/).
+https://www.microsoft.com/net/download/
 
-## Website Requirements
-Your MVC Web Application should contain the following:
+The dotnet CLI utility would then be used to build and run the application:
 
-1. Add the MVC Middleware and include template routing (the route must be explicitly defined)
-1. Only 1 controller. The home controller, with 3 actions (2 Index, and 1 Results)
-	1. Remember the difference between HTTPGET and HTTPPOST
-	1. Upon posting back to the server, call the `Results` action to redirect to the results view. 
-1. Views to generate the home page and search results
-	1. Use a form tag to accept user input
-	1. Use Tag Helpers to help transfer data from the view to the controller
-1. Include HTML/CSS in your final product. **This is required.** 
-	1. It doesn't have to be fancy, but make it look nice.
-1. Enable use of Static Files in your website and create a stylesheet and incorprate some creativity into your application. 
-1. A model class that contains the following properties(these are the headers of the csv file):
+    cd LinqInManhattan
+    dotnet build
+    dotnet run
 
-	```csharp
-	 	public int Year { get; set; }
-		public string Honor { get; set; }
-		public string Name { get; set; }
-		public string Country { get; set; }
-		public int Birth_Year { get; set; }
-		public int DeathYear { get; set; }
-		public string Title { get; set; }
-		public string Category { get; set; }
-		public string Context { get; set; }
-	```
-1. Using what you know about reading in external files, and the `System.File` library, convert the CSV file provided into readable data that can be used within the program. CSV files are delimited using commmas, this should be a good start to how to parse out your data. <br />
+The _dotnet run_ command will start an HTTP server on localhost using Kestrel
+which can be accessed by the user's browser pointing to localhost on the port
+provided by _dotnet run_'s console output.
 
-	Here is my code. Feel free to use it, but if you do **comment every single line** and make sure you know what is going on. 
-	This code lives in my `TimePerson.cs` model. 
+Additionally, users can build and run PersonOfTheYear using Visual Studio
+2017 or greater by opening the solution file at the root of this repository. 
+Unit tests have been provided for only the CSV parsing code and make use of
+the xUnit testing framework (included via a NuGet dependency).
 
-	```csharp
+## Example
 
-		public List<TimePerson> GetPersons(int begYear, int endYear)
-		{
-		    List<TimePerson> people = new List<TimePerson>();
-		    string path = Environment.CurrentDirectory;
-		    string newPath = Path.GetFullPath(Path.Combine(path, @"wwwroot\personOfTheYear.csv"));
-		    string[] myFile = File.ReadAllLines(newPath);
+#### Index View for the Home Controller ####
+![Index View Screenshot](/assets/indexView.JPG)
+#### Results View Using Input From the Index View ####
+![Non-Empty Query Screenshot](/assets/resultsView.JPG)
 
-		    for (int i = 1; i < myFile.Length; i++)
-		    {
-			string[] fields = myFile[i].Split(',');
-			people.Add(new TimePerson
-			{
-			    Year = Convert.ToInt32(fields[0]),
-			    Honor = fields[1],
-			    Name = fields[2],
-			    Country = fields[3],
-			    Birth_Year = (fields[4] == "")? 0 : Convert.ToInt32(fields[4]),
-			    DeathYear = (fields[5] == "")? 0 : Convert.ToInt32(fields[5]),
-			    Title = fields[6],
-			    Category = fields[7],
-			    Context = fields[8],
-			});
-		    }
+## Architecture
 
-		 List<TimePerson> listofPeople = people.Where(p => (p.Year >= begYear) && (p.Year <= endYear)).ToList();
-		 return listofPeople;
-		}
-	```
+PersonOfTheYear consists of a single MVC controller, HomeController, with
+two actions, Index and Results. 
 
-## ReadMe
-A README is a module consumer's first -- and maybe only -- look into your creation. The consumer wants a module to fulfill their need, so you must explain exactly what need your module fills, and how effectively it does so.
-<br />
-Your job is to
+### HomeController
 
-1. tell them what it is (with context)
-2. show them what it looks like in action
-3. show them how they use it
-4. tell them any other relevant details
-<br />
+_HomeController_ defines two actions for the PersonOfTheYear application. Each 
+action is associated with its own Razor View page detailed below. StaticFiles 
+is used in conjunction with MVC in order to deliver the CSS3 style sheet for 
+both Razor Views and the background image displayed in those views.
 
-This is ***your*** job. It's up to the module creator to prove that their work is a shining gem in the sea of slipshod modules. Since so many developers' eyes will find their way to your README before anything else, quality here is your public-facing measure of your work.
+#### Index (Razor View and Action) ####
 
-<br /> <br /> Refer to the sample-README in the class repo for an example. 
-- [Reference](https://github.com/noffle/art-of-readme)
+_Index_ delivers the user a simple HTML form asking for a minimum and maximum 
+year from which Person of the Year awardees will be filtered in the _Results_ 
+view. These years are input via HTML input tags and delivered to the _Home_ 
+controller via HTTP POST.
 
-## Rubric
-- 7pts: Program meets all requirements described in Lab directions
+#### Results (Razor View and Action) ####
 
-	Points  | Reasoning | 
-	 ------------ | :-----------: | 
-	7       | Program runs as expected, no exceptions during execution |
-	5       | Program meets all of the  functionality requirements described above // Program runs/compiles, Program contains logic/process errors|
-	4       | Program meets most of the functionality requirements descibed above // Program runs/compiles, but throws exceptions during execution |
-	3       | Program missing most of the functionality requirements descibed above // Program runs/compiles |
-	2       | Missing tests // tests are not passing // not enough valid tests |
-	2       | Missing Readme Document // Readme Document does not meet standards |
-	0       | Program does not compile/run. Build Errors // Required naming conventions not met |
-	0       | No Submission |
+_Results_ displays a listing of Time Person of the Year awardees within the
+range of years specified by the user using the _Index_ action from HTTP POST.
 
-- 3pts: Code meets industry standards
-	- These points are only awardable if you score at minimum a 5/7 on above criteria
+### Data Model
 
-	Points  | Reasoning | 
-	 ------------ | :-----------: | 
-	3       | Code meets Industry Standards // methods and variables namings are appropriate // Selective and iterative statements are used appropriately, Fundamentals are propertly executed // Clearly and cleanly commented |
-	2       | syntax for naming conventions are not correct (camelCasing and PascalCasing are used appropriately) // slight errors in use of fundamentals // Missing some comments |
-	1       | Inappropriate naming conventions, and/or inappropriate use of fundamentals // Code is not commented  |
-	0       | No Submission or incomplete submission |
+The data model is composed of a single _Person_ class which contains properties 
+for Year, Honor, Name, Country, Birth Year, Death Year, Title, Category, and 
+Context. These values are populated by an included CSV file and placed into a 
+.NET generic List object by the _Results_ action upon redirect from the _Index_ 
+action's POST implementation. No manipulation of the source CSV file is
+performed beyond reading from the file.
 
+## Change Log
 
+* 4.3.2018 [Joshua Taylor](mailto:taylor.joshua88@gmail.com) - Initial
+release. All included tests are passing.
