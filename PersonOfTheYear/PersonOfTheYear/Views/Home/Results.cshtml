@@ -1,35 +1,47 @@
 ﻿@model List<PersonOfTheYear.Models.Person>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 <head>
     <link rel="stylesheet" href="~/style.css" />
 </head>
 
 <body>
-    <div><h1>Time's Persons of the Year Results</h1></div>
-    <table>
-        <thead>
-            <tr>
-                <th>Year</th>
-                <th>Honor</th>
-                <th>Name</th>
-                <th>Country</th>
-                <th>Birth Year</th>
-                <th>Death Year</th>
-                <th>Title</th>
-                <th>Category</th>
-                <th>Context</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var person in Model)
-            {
+    <div>
+        <h1>Time's Persons of the Year Results</h1>
+        <a asp-controller="Home" asp-action="Index">Perform Another Search</a>
+    </div>
+    @if (Model.Count < 1)
+    {
+        <h2>No Results Found</h2>
+        <p>Please try again with years ranging from 1927 through 2016.</p>
+    }
+    else
+    {
+        <table>
+            <thead>
                 <tr>
-                    @foreach (var property in person)
-                    {
-                        <td>@property</td>
-                    }
+                    <th>Year</th>
+                    <th>Honor</th>
+                    <th>Name</th>
+                    <th>Country</th>
+                    <th>Birth Year</th>
+                    <th>Death Year</th>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Context</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var person in Model)
+                {
+                    <tr>
+                        @foreach (var property in person)
+                        {
+                            <td>@property</td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
 </body>

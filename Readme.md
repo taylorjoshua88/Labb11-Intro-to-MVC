@@ -63,8 +63,10 @@ controller via HTTP POST.
 
 _Results_ displays a listing of Time Person of the Year awardees within the
 range of years specified by the user using the _Index_ action from HTTP POST.
+All rows of the source data are displayed in an HTML table using Razor syntax
+to retrieve values from the data model.
 
-### Data Model
+### Data Model (Person)
 
 The data model is composed of a single _Person_ class which contains properties 
 for Year, Honor, Name, Country, Birth Year, Death Year, Title, Category, and 
